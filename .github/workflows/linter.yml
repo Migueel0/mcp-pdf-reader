@@ -1,0 +1,42 @@
+name: Python Lint
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v5
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 autopep8
+ 
+    - name: Format with autopep8
+      run: |
+        autopep8 --in-place --aggressive --aggressive --recursive server tools
+      
+    - uses: stefanzweifel/git-auto-commit-action@8621497c8c39c72f3e2a999a26b4ca1b5058a842
+      with:
+        commit_message: "refactor: Apply flake8 autopep8 formatting"
+
+    - name: Lint with flake8
+      run: |
+        flake8 server tools
+
+
+    

@@ -1,5 +1,6 @@
 from pypdf import PdfReader
 
+
 def extract_text_from_pdf(file_path) -> str:
     """Extracts text from a PDF file.
 
@@ -19,5 +20,3 @@ def extract_text_from_pdf(file_path) -> str:
             text_chunks.append(page_text)
 
     return "\n".join(text_chunks)
-
-
