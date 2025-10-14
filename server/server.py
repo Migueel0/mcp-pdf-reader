@@ -16,7 +16,7 @@ async def read_pdf(file_path: str) -> Dict[str, Any]:
     return {
         "file path": file_path,
         "extracted_text": text
-        }
+    }
 
 
 def main():
