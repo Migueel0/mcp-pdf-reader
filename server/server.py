@@ -1,16 +1,22 @@
+from typing import Dict, Any
 from mcp.server import FastMCP
+from tools import pdf_reader
 
 server = FastMCP("pdf-reader")
 
 
-@server.tool("read_pdf", description="Reads and extracts text from a PDF file.")
-async def read_pdf(file_path: str) -> str:
+@server.tool("read_pdf", description="Extracts text from a PDF file.")
+async def read_pdf(file_path: str) -> Dict[str, Any]:
     """Reads and extracts text from a PDF file.
 
     Args:
         file_path (str): The path to the PDF file."""
 
-    ...
+    text = pdf_reader.extract_text_from_pdf(file_path)
+    return {
+        "file path": file_path,
+        "extracted_text": text
+        }
 
 
 def main():
