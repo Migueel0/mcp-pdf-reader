@@ -2,7 +2,7 @@ from mcp.server import FastMCP
 
 server = FastMCP("pdf-reader")
 
-@server.tool
+@server.tool("read_pdf", description="Reads and extracts text from a PDF file.")
 async def read_pdf(file_path: str) -> str:
     """Reads and extracts text from a PDF file.
 
