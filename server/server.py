@@ -19,9 +19,5 @@ async def read_pdf(file_path: str) -> Dict[str, Any]:
     }
 
 
-def main():
+def run():
     server.run()
-
-
-if __name__ == "__main__":
-    main()
