@@ -1,113 +1,172 @@
+# mcp-pdf-reader
 
-mcp-pdf-reader
-================
+MCP server that extracts text from PDF files using
+**pypdf**.\
+Optionally, if **Tesseract OCR** is installed, the server can also
+extract text from images embedded inside PDFs.
 
-Lightweight MCP server that extracts text from PDFs using pypdf. Includes a small MCP service exposing a `read_pdf` tool that returns the extracted text.
+The server exposes a single MCP tool: **`read_pdf(file_path)`**, which
+returns a JSON-serializable dictionary containing the original file path
+and the extracted text.
 
-Contents
-- `server/` — MCP server launcher and tools used by the server.
-- `tools/` — helper modules; `pdf_reader.py` contains PDF extraction logic.
-- `requirements.txt` — minimal runtime dependencies.
+## Project Structure
 
-Quick summary
-- Tool: `read_pdf(file_path)` — returns a JSON-serializable dict with the original file path and the extracted text.
+-   **server/** --- MCP tool definitions used by the server
+-   **tools/** --- Utility modules; `pdf_reader.py` contains PDF
+    extraction logic
+-   **main.py** --- MCP server launcher
+-   **requirements.txt** --- Runtime dependencies
 
-Requirements
-- Python 3.10+ recommended
-- Virtualenv (recommended)
+## Quick Summary
 
-## Installation (Windows)
+### Tool: `read_pdf(file_path)`
 
-1. Create and activate a virtual environment (recommended):
+Returns:
 
-```powershell
-python -m venv venv
-.\venv\Scripts\Activate.ps1
+``` json
+{
+  "file_path": "path/to/file.pdf",
+  "extracted_text": "Sample extracted text..."
+}
 ```
 
-2. Install runtime dependencies with virtual environment activated:
+## Requirements
 
-```powershell
+-   **Python ≥ 3.13** (recommended)\
+-   **virtualenv** (recommended)\
+-   **Tesseract OCR** (optional, required only for OCR on images inside
+    PDFs)
+
+## Installing Dependencies (Windows)
+
+1.  Create and activate a virtual environment:
+
+``` powershell
+python -m venv venv
+.venv\Scripts\activate
+```
+
+2.  Verify your Python version:
+
+``` powershell
+python --version
+```
+
+3.  Install dependencies:
+
+``` powershell
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-## Installation (Linux)
+## Installing Dependencies (Linux)
 
-1. Create and activate a virtual environment:
+1.  Create and activate a virtual environment:
 
-```bash
+``` bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-2. Install runtime dependencies with virtual environment activated
+2.  Verify your Python version:
 
-```bash
-venv/bin/pip install -r requirements.txt
+``` bash
+python3 --version
 ```
 
-## Running the server
+3.  Install dependencies:
 
-Recommended (runs the package as a module so imports work):
-
-```powershell
-python server\server.py
-```
-or on Linux/macOS:
-```bash
-python3 server/server.py
+``` bash
+python3 -m pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
-## Using the `read_pdf` tool
+## Installing Tesseract (Optional)
 
-The MCP server exposes `read_pdf(file_path)`; how you call it depends on the MCP client. Example (local test runner):
+Follow the official installation instructions:\
+https://tesseract-ocr.github.io/tessdoc/Installation.html
 
-- Run the server as shown above.
-- Call the `read_pdf` tool through your MCP client with the target PDF path.
+You may need to manually add `tesseract` to your system `PATH`.
 
-Example server response
+More details available in the Tesseract User Manual:\
+https://github.com/tesseract-ocr/tessdoc
 
-When the `read_pdf` tool completes successfully it returns a JSON-serializable dictionary similar to:
+## Configuring Environment Variables
 
-```json
+Rename `env.example` to `.env` and set your Tesseract binary path.
+
+Example:
+
+``` txt
+# Windows
+TESSERACT_CMD=C:\Program Files\Tesseract-OCR\tesseract.exe
+
+# Linux
+TESSERACT_CMD=/usr/bin/tesseract
+```
+
+## Running the Server
+
+Launch the MCP server using:
+
+``` bash
+python main.py
+```
+
+If everything is configured correctly, the server will start and expose
+the `read_pdf` tool.
+
+## MCP Usage Example
+
+Call the tool from your MCP client:
+
+### Tool exposed:
+
+    read_pdf(file_path)
+
+### Example response:
+
+``` json
 {
-  "file path": "sample/path/sample_file.pdf",
-  "extracted_text": "Sample text\n..."
+  "file_path": "sample/path/sample_file.pdf",
+  "extracted_text": "Sample text
+..."
 }
 ```
 
-## MCP launcher configuration
+## MCP Launcher Configuration
 
-If you use a launcher that expects a JSON config, an example that runs the server using the venv Python (replace paths for your machine):
+### Windows
 
-### 1. Windows
-```json
+``` json
 {
   "mcpServers": {
     "pdf-reader": {
-        "command": "PATH/TO/YOUR/VENV/Scripts/python.exe",
-        "args": [
-            "PATH/TO/YOUR/REPO/mcp-pdf-reader/server/server.py"
-        ]
+      "command": "PATH/TO/VENV/Scripts/python.exe",
+      "args": [
+        "PATH/TO/REPO/mcp-pdf-reader/main.py"
+      ]
     }
   }
 }
 ```
 
-### 2. Linux
-```json
+### Linux
+
+``` json
 {
   "mcpServers": {
     "pdf-reader": {
-        "command": "PATH/TO/YOUR/VENV/bin/python",
-        "args": [
-            "PATH/TO/YOUR/REPO/mcp-pdf-reader/server/server.py"
-        ]
+      "command": "PATH/TO/VENV/bin/python",
+      "args": [
+        "PATH/TO/REPO/mcp-pdf-reader/main.py"
+      ]
     }
   }
 }
 ```
 
----
+## Notes
 
-Note: This project is an initial test-version. Future work will add more tools and improve the server's installation and deployment experience.
+This project is an early test version. Future updates will extend
+available tools and improve installation and deployment workflows.
