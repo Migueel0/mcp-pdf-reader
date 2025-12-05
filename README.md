@@ -32,8 +32,8 @@ Returns:
 
 ## Requirements
 
--   **Python ≥ 3.13** (recommended)\
--   **virtualenv** (recommended)\
+-   **Python ≥ 3.13** (recommended)
+-   **virtualenv** (recommended)
 -   **Tesseract OCR** (optional, required only for OCR on images inside
     PDFs)
 
