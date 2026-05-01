@@ -31,10 +31,11 @@ async def read_pdf(file_path: str) -> Dict[str, Any]:
         logger.exception("Failed to parse PDF: %s", file_path)
         return error_response(
             "InvalidPDF",
-            "PDF file could not be parsed. The file may be corrupt or unsupported."
-        )
+            "PDF file could not be parsed. The file may be corrupt or unsupported.")
     except Exception as exc:
-        logger.exception("Unexpected error extracting text from: %s", file_path)
+        logger.exception(
+            "Unexpected error extracting text from: %s",
+            file_path)
         return error_response("ProcessingError", str(exc))
 
 
@@ -55,10 +56,11 @@ async def get_pdf_metadata(file_path: str) -> Dict[str, Any]:
         logger.exception("Failed to parse PDF: %s", file_path)
         return error_response(
             "InvalidPDF",
-            "PDF file could not be parsed. The file may be corrupt or unsupported."
-        )
+            "PDF file could not be parsed. The file may be corrupt or unsupported.")
     except Exception as exc:
-        logger.exception("Unexpected error extracting metadata from: %s", file_path)
+        logger.exception(
+            "Unexpected error extracting metadata from: %s",
+            file_path)
         return error_response("ProcessingError", str(exc))
 
 
