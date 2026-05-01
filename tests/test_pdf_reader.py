@@ -25,7 +25,8 @@ def test_extract_text_multi_page_pdf():
 
 
 def test_extract_metadata_rich_pdf():
-    metadata = pdf_reader.extract_metadata_from_pdf(_pdf_path("metadata-rich.pdf"))
+    metadata = pdf_reader.extract_metadata_from_pdf(
+        _pdf_path("metadata-rich.pdf"))
     assert metadata["page_count"] == 1
     assert metadata["title"] == "Metadata Rich"
     assert metadata["author"] == "Test Author"
