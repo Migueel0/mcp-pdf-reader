@@ -3,7 +3,9 @@ from typing import Dict, Any
 from mcp.server import FastMCP
 from pypdf.errors import PdfReadError
 from tools import pdf_reader
-from server.error_handler.error_handler import validate_file_path, error_response
+from server.error_handler.error_handler import (
+    validate_file_path, error_response
+)
 
 server = FastMCP("pdf-reader")
 logging.basicConfig(level=logging.INFO)
