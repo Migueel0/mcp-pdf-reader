@@ -18,6 +18,16 @@ async def read_pdf(file_path: str) -> Dict[str, Any]:
         "extracted_text": text
     }
 
+@server.tool("get_pdf_metadata")
+async def get_pdf_metadata(file_path:str) -> Dict[str,Any]:
+    """Extracts metadata from a PDF file.
+
+    Args:
+        file_path (str): The path to the PDF file."""
+    
+    return pdf_reader.extract_metadata_from_pdf(file_path)
+
+
 
 def run():
     server.run()
