@@ -41,3 +41,32 @@ def extract_text_from_pdf(file_path) -> str:
 
     full_text = "\n".join(pages)
     return full_text
+
+
+def extract_metadata_from_pdf(file_path) -> dict:
+    """Extracts metadata from a PDF file.
+
+    Args:
+        file_path (str): The path to the PDF file.
+
+    Returns:
+        dict: Metadata dictionary.
+    """
+
+    reader = PdfReader(file_path)
+    doc_info = reader.metadata or {}
+
+    title = getattr(doc_info, "title", None) or doc_info.get("/Title")
+    author = getattr(doc_info, "author", None) or doc_info.get("/Author")
+
+    metadata = {
+        "page_count": len(reader.pages)
+    }
+
+    if title:
+        metadata["title"] = title
+
+    if author:
+        metadata["author"] = author
+
+    return metadata
