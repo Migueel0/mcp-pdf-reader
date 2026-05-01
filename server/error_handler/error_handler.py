@@ -1,6 +1,7 @@
 import os
 from typing import Dict, Any
 
+
 def error_response(error_type: str, message: str) -> Dict[str, Any]:
     return {
         "error": {

@@ -1,9 +1,10 @@
 from typing import Dict, Any
 from mcp.server import FastMCP
 from tools import pdf_reader
-from  error_handler.error_handler import validate_file_path, error_response
+from error_handler.error_handler import validate_file_path, error_response
 
 server = FastMCP("pdf-reader")
+
 
 @server.tool("read_pdf", description="Extracts text from a PDF file.")
 async def read_pdf(file_path: str) -> Dict[str, Any]:
