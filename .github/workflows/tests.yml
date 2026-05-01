@@ -24,4 +24,4 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run Tests
-      run: echo "No tests available currently, change this line when tests are added"
+      run: pytest
